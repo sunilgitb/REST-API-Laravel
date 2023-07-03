@@ -37,29 +37,45 @@ class UserController extends Controller
         }
     }
 
-    public function show($id)
+    // public function show($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     return response()->json(['user' => $user]);
+    // }
+    public function show()
     {
-        $user = User::findOrFail($id);
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
         return response()->json(['user' => $user]);
     }
 
-    public function update(Request $request, $id)
+
+    public function update(Request $request)
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
             'password' => 'sometimes|min:6',
         ]);
 
         // Find the user
-        $user = User::findOrFail($id);
+        $user = auth()->user();
 
         // Update the user
         $user->update($validatedData);
 
-        return response()->json(['user' => $user]);
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
+            'user' => $user
+        ]);
     }
+
 
     public function destroy($id)
     {
@@ -69,6 +85,23 @@ class UserController extends Controller
         // Delete the user
         $user->delete();
 
-        return response()->json(null, 204);
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully'
+        ]);
     }
+
+    // public function destroy()
+    // {
+    //     // Find the user
+    //     $user = auth()->user();
+
+    //     // Delete the user
+    //     $user->delete();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'User deleted successfully'
+    //     ]);
+    // }
 }

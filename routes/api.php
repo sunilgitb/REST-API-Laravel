@@ -34,9 +34,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index']);
         Route::post('/create-user', [UserController::class, 'store']);
-        Route::get('/userlist', [UserController::class, 'show']);
-        Route::put('update-user/{id}', [UserController::class, 'update']);
-        Route::delete('/{id}', [UserController::class, 'destroy']);
+        Route::post('/userlist', [UserController::class, 'show']);
+        Route::post('update-user', [UserController::class, 'update']);
+        Route::post('delete-user/{id}', [UserController::class, 'destroy']);
     });
 
     // API route for logout user
