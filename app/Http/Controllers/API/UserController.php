@@ -14,46 +14,28 @@ class UserController extends Controller
         return response()->json(['users' => $users]);
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Validate the incoming request data
-    //     $validatedData = $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email|unique:users',
-    //         'password' => 'required|min:6',
-    //     ]);
-
-    //     // Create a new user
-    //     $user = User::create($validatedData);
-
-    //     return response()->json(['user' => $user], 201);
-    // }
-
     public function store(Request $request)
     {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
         try {
-            // Validate the incoming request data
-            $validatedData = $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:6',
-            ]);
+            // Check if the user already exists by email
+            $user = User::firstOrCreate(['email' => $validatedData['email']], $validatedData);
 
-            // Create a new user
-            $user = User::create($validatedData);
-
-            return response()->json(['user' => $user], 201);
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->errorInfo[1] === 1062) {
-                // Error code 1062 indicates a duplicate entry error
-                return response()->json(['error' => 'Email already exists.'], 400);
+            if (!$user->wasRecentlyCreated) {
+                throw new \Exception('The email address is already in use.');
             }
 
-            // For other database-related errors, you can handle them as needed
-            return response()->json(['error' => 'Database error.'], 500);
+            return response()->json(['user' => $user], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
         }
     }
-
 
     public function show($id)
     {
