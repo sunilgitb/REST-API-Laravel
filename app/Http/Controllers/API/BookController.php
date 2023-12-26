@@ -24,8 +24,11 @@ class BookController extends Controller
             $validatedData = $request->validate([
                 'title' => 'required|string',
                 'author' => 'required|string',
-               
-            ]);
+                'description' => 'required|string',
+'year_published' => 'required',
+
+'price' => 'required',   
+]);
 
             $book = Book::create($validatedData);
             return response()->json($book, 201);
@@ -40,6 +43,9 @@ class BookController extends Controller
             $validatedData = $request->validate([
                 'title' => 'required|string',
                 'author' => 'required|string',
+'description' => 'required|string',
+'year_published' => 'required',
+'price' => 'required',  
                 
             ]);
 
