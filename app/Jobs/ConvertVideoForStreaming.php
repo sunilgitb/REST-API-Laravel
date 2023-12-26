@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Video;
+use App\Models\Video;
 use Carbon\Carbon;
 use FFMpeg;
 use FFMpeg\Format\Video\X264;
