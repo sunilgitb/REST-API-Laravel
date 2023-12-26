@@ -24,7 +24,7 @@ class BookController extends Controller
             $validatedData = $request->validate([
                 'title' => 'required|string',
                 'author' => 'required|string',
-                // Add validation rules for other fields if needed
+               
             ]);
 
             $book = Book::create($validatedData);
@@ -40,7 +40,7 @@ class BookController extends Controller
             $validatedData = $request->validate([
                 'title' => 'required|string',
                 'author' => 'required|string',
-                // Add validation rules for other fields if needed
+                
             ]);
 
             $book->update($validatedData);
