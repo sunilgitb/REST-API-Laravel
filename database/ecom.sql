@@ -125,6 +125,17 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (2, 'Test 52', 'test52@gmail.com', NULL, '12345678', NULL, '2023-07-02 04:27:15', '2023-07-02 04:27:15'),
 (3, 'Test6', 'test6@gmail.com', NULL, '$2y$10$3aEgMAko0jlh801K6mDBJ.3DusBHaoR4F4voBBNfWT1Aepc/tpCBa', NULL, '2023-07-02 04:35:20', '2023-07-02 04:35:20');
 
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,  
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE
+
 --
 -- Indexes for dumped tables
 --
