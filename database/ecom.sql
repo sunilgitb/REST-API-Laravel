@@ -136,6 +136,18 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE
 
+
+CREATE TABLE videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    original_name VARCHAR(255),
+    disk VARCHAR(255),
+    path VARCHAR(255),
+    converted_for_downloading_at DATETIME NULL,
+    converted_for_streaming_at DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 --
 -- Indexes for dumped tables
 --
